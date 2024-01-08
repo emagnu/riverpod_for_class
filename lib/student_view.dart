@@ -11,20 +11,24 @@ import 'model/student_view_notifier.dart';
 
 //
 
-class StudentView extends StatefulWidget {
+//  //
+class StudentView extends ConsumerStatefulWidget {
   const StudentView({super.key});
 
   @override
-  _StudentViewState createState() => _StudentViewState();
+  // _StudentViewState createState() => _StudentViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _StudentViewState();
 }
 
-class _StudentViewState extends State<StudentView> {
+class _StudentViewState extends ConsumerState<StudentView> {
   final _gap = const SizedBox(height: 8.0);
   final _fnameController = TextEditingController();
   final _lnameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final studentState = ref.watch(studentViewNotifierProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Student View'),
@@ -59,10 +63,37 @@ class _StudentViewState extends State<StudentView> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Student student = Student(
+                    fname: _fnameController.text,
+                    lname: _lnameController.text,
+                  );
+                  ref
+                      .read(studentViewNotifierProvider.notifier)
+                      .addStudent(student);
+                },
                 child: const Text('Add Student'),
               ),
             ),
+            _gap,
+            _gap,
+            studentState.isLoading
+                ? const CircularProgressIndicator()
+                : studentState.lstStudents.isEmpty
+                    ? const Text('No data')
+                    : Expanded(
+                        child: ListView.builder(
+                          itemCount: studentState.lstStudents.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title:
+                                  Text(studentState.lstStudents[index].fname),
+                              subtitle:
+                                  Text(studentState.lstStudents[index].lname),
+                            );
+                          },
+                        ),
+                      ),
           ],
         ),
       ),

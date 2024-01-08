@@ -1,7 +1,5 @@
 //  //
 //  Import LIBRARIES
-import 'package:flutter/foundation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 //  Import FILES
 import '../model/student.dart';
 //  PARTS
