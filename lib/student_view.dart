@@ -11,25 +11,30 @@ import 'model/student_view_notifier.dart';
 
 //
 
-class StudentView extends ConsumerStatefulWidget {
+class StudentView extends StatefulWidget {
   const StudentView({super.key});
 
   @override
-  ConsumerState<StudentView> createState() => _StudentViewState();
+  _StudentViewState createState() => _StudentViewState();
 }
 
-class _StudentViewState extends ConsumerState<StudentView> {
+class _StudentViewState extends State<StudentView> {
   final _gap = const SizedBox(height: 8.0);
   final _fnameController = TextEditingController();
   final _lnameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final studentState = ref.watch(studentViewNotifierProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Student View'),
       ),
+      // body: const Center(
+      //   child: Text(
+      //     'Student View',
+      //     style: TextStyle(fontSize: 50),
+      //   ),
+      // ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -38,7 +43,7 @@ class _StudentViewState extends ConsumerState<StudentView> {
               controller: _fnameController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Enter your first name',
+                hintText: 'Enter your firstname',
               ),
             ),
             _gap,
@@ -46,45 +51,118 @@ class _StudentViewState extends ConsumerState<StudentView> {
               controller: _lnameController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Enter your last name',
+                hintText: 'Enter your lastname',
               ),
             ),
+            _gap,
             _gap,
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                  onPressed: () {
-                    Student student = Student(
-                      fname: _fnameController.text,
-                      lname: _lnameController.text,
-                    );
-                    ref.read(studentViewNotifierProvider);
-                  },
-                  child: const Text('Add Student')),
+                onPressed: () {},
+                child: const Text('Add Student'),
+              ),
             ),
-            _gap,
-            studentState.isLoading
-                ? const CircularProgressIndicator()
-                // : const Text('No Data'),
-                : studentState.lstStudents.isEmpty
-                    ? const Text('No Data')
-                    :
-                    // Show list view
-                    Expanded(
-                        child: ListView.builder(
-                          itemCount: studentState.lstStudents.length,
-                          itemBuilder: (context, index) {
-                            final student = studentState.lstStudents[index];
-                            return ListTile(
-                              title: Text(student.fname),
-                              subtitle: Text(student.lname),
-                            );
-                          },
-                        ),
-                      ),
           ],
         ),
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// class StudentView extends ConsumerStatefulWidget {
+//   const StudentView({super.key});
+
+//   @override
+//   ConsumerState<StudentView> createState() => _StudentViewState();
+// }
+
+// class _StudentViewState extends ConsumerState<StudentView> {
+//   final _gap = const SizedBox(height: 8.0);
+//   final _fnameController = TextEditingController();
+//   final _lnameController = TextEditingController();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final studentState = ref.watch(studentViewNotifierProvider);
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Student View'),
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(8.0),
+//         child: Column(
+//           children: <Widget>[
+//             TextFormField(
+//               controller: _fnameController,
+//               decoration: const InputDecoration(
+//                 border: OutlineInputBorder(),
+//                 hintText: 'Enter your first name',
+//               ),
+//             ),
+//             _gap,
+//             TextFormField(
+//               controller: _lnameController,
+//               decoration: const InputDecoration(
+//                 border: OutlineInputBorder(),
+//                 hintText: 'Enter your last name',
+//               ),
+//             ),
+//             _gap,
+//             SizedBox(
+//               width: double.infinity,
+//               child: ElevatedButton(
+//                   onPressed: () {
+//                     Student student = Student(
+//                       fname: _fnameController.text,
+//                       lname: _lnameController.text,
+//                     );
+//                     ref.read(studentViewNotifierProvider);
+//                   },
+//                   child: const Text('Add Student')),
+//             ),
+//             _gap,
+//             studentState.isLoading
+//                 ? const CircularProgressIndicator()
+//                 // : const Text('No Data'),
+//                 : studentState.lstStudents.isEmpty
+//                     ? const Text('No Data')
+//                     :
+//                     // Show list view
+//                     Expanded(
+//                         child: ListView.builder(
+//                           itemCount: studentState.lstStudents.length,
+//                           itemBuilder: (context, index) {
+//                             final student = studentState.lstStudents[index];
+//                             return ListTile(
+//                               title: Text(student.fname),
+//                               subtitle: Text(student.lname),
+//                             );
+//                           },
+//                         ),
+//                       ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
